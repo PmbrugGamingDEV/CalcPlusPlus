@@ -1,4 +1,10 @@
-# calc++
+# Calc++
 
-A calculator with customizable decimal precision written in C++ using the Win32 API.
-Also contains a math library with both a math function interface and random data type interface.
+Calc++ is a Win32 calculator written in C++ with customizable decimal precision.
+
+The solution contains two projects:
+
+- `calc++` - the main Win32 calculator application.
+- `NMath` - a static math library exposing `IMath` and `IRandom` interfaces.
+
+The app links against `NMath.lib` and uses shared public headers from the `shared` folder.
