@@ -80,8 +80,6 @@ void SecretBeep()
     DWORD frequency = g_pRandom->RandomULong(200, 2000);
     DWORD duration = static_cast<DWORD>(g_pRandom->RandomULong(50, 1000) * g_pMath->GetPi());
 
-    DWORD randomvalue = static_cast<DWORD>(g_pRandom->RandomDouble(0.1, 0.5) * g_pMath->Add(2.405, g_pMath->GetPi());
-
     Beep(frequency, duration);
 }
 
