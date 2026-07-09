@@ -1,9 +1,10 @@
-﻿//===========================================================================
-// Copyright (c) 2026, PmbrugGaming
+﻿//========= Copyright PmbrugGaming. All rights reserved. ============//
 //
-// Purpose: This has the code of the calculator.
-// 
-//================================================================
+// Purpose: Defines the calculator.
+//
+// $NoKeywords: $
+//
+//=============================================================================//
 
 #include "pch.h"
 #include "framework.h"
