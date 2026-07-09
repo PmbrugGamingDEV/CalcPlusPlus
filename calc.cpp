@@ -1,10 +1,14 @@
-﻿// calc++.cpp : Defines the entry point for the application.
+﻿//===========================================================================
+// Copyright (c) 2026, PmbrugGaming
 //
+// Purpose: This has the code of the calculator.
+// 
+//================================================================
 
 #include "pch.h"
 #include "framework.h"
 #include "calc.h"
-#include "math/NMath.h"
+#include "imath.h"
 
 #include <iostream>
 #include <fcntl.h>
@@ -23,7 +27,7 @@
 
 #pragma comment(lib, "Comdlg32.lib") // need this
 
-#define MAX_LOADSTRING 100
+constexpr auto MAX_LOADSTRING = 100;
 
 /* Calculator Button IDs. */
 #define IDC_DISPLAY 1000 
@@ -374,13 +378,13 @@ void CalculateResult()
     switch (g_Operator)
     {
     case L'+':
-        result = NMath::g_pMath->Add(g_LeftValue, rightValue);
+        result = g_pMath->Add(g_LeftValue, rightValue);
         break;
     case L'-':
-        result = NMath::g_pMath->Subtract(g_LeftValue, rightValue);
+        result = g_pMath->Subtract(g_LeftValue, rightValue);
         break;
     case L'*':
-        result = NMath::g_pMath->Multiply(g_LeftValue, rightValue);
+        result = g_pMath->Multiply(g_LeftValue, rightValue);
         break;
     case L'/':
         if (rightValue == 0.0)
@@ -390,10 +394,10 @@ void CalculateResult()
             g_Operator = 0;
             return;
         }
-        result = NMath::g_pMath->Divide(g_LeftValue, rightValue);
+        result = g_pMath->Divide(g_LeftValue, rightValue);
         break;
     case L'^':
-        result = NMath::g_pMath->Power(g_LeftValue, rightValue);
+        result = g_pMath->Power(g_LeftValue, rightValue);
         break;
     default:
         return;
@@ -467,9 +471,9 @@ private:
         while (true)
         {
             if (Match(L'+'))
-                value = NMath::g_pMath->Add(value, ParseTerm());
+                value = g_pMath->Add(value, ParseTerm());
             else if (Match(L'-'))
-                value = NMath::g_pMath->Subtract(value, ParseTerm());
+                value = g_pMath->Subtract(value, ParseTerm());
             else
                 return value;
         }
@@ -482,7 +486,7 @@ private:
         while (true)
         {
             if (Match(L'*'))
-                value = NMath::g_pMath->Multiply(value, ParsePower());
+                value = g_pMath->Multiply(value, ParsePower());
             else if (Match(L'/'))
             {
                 double rhs = ParsePower();
@@ -490,7 +494,7 @@ private:
                 if (rhs == 0.0)
                     throw std::runtime_error("Divide by zero");
 
-                value = NMath::g_pMath->Divide(value, rhs);
+                value = g_pMath->Divide(value, rhs);
             }
             else
                 return value;
@@ -502,7 +506,7 @@ private:
         double value = ParseFactor();
 
         if (Match(L'^'))
-            value = NMath::g_pMath->Power(value, ParsePower());
+            value = g_pMath->Power(value, ParsePower());
 
         return value;
     }
@@ -536,7 +540,7 @@ private:
             if (!Match(L')'))
                 throw std::runtime_error("Missing )");
 
-            return NMath::g_pMath->Absolute(value);
+            return g_pMath->Absolute(value);
         }
 
         if (m_Text.compare(m_Pos, 5, L"sqrt(") == 0)
@@ -544,7 +548,7 @@ private:
             m_Pos += 5;
             double value = ParseExpression();
             if (!Match(L')')) throw std::runtime_error("Missing )");
-            return NMath::g_pMath->SquareRoot(value);
+            return g_pMath->SquareRoot(value);
         }
 
         if (m_Text.compare(m_Pos, 7, L"square(") == 0)
@@ -552,7 +556,7 @@ private:
             m_Pos += 7;
             double value = ParseExpression();
             if (!Match(L')')) throw std::runtime_error("Missing )");
-            return NMath::g_pMath->Square(value);
+            return g_pMath->Square(value);
         }
 
         if (m_Text.compare(m_Pos, 5, L"cube(") == 0)
@@ -560,7 +564,7 @@ private:
             m_Pos += 5;
             double value = ParseExpression();
             if (!Match(L')')) throw std::runtime_error("Missing )");
-            return NMath::g_pMath->Cube(value);
+            return g_pMath->Cube(value);
         }
 
         if (m_Text.compare(m_Pos, 6, L"floor(") == 0)
@@ -568,7 +572,7 @@ private:
             m_Pos += 6;
             double value = ParseExpression();
             if (!Match(L')')) throw std::runtime_error("Missing )");
-            return NMath::g_pMath->Floor(value);
+            return g_pMath->Floor(value);
         }
 
         if (m_Text.compare(m_Pos, 5, L"ceil(") == 0)
@@ -576,7 +580,7 @@ private:
             m_Pos += 5;
             double value = ParseExpression();
             if (!Match(L')')) throw std::runtime_error("Missing )");
-            return NMath::g_pMath->Ceiling(value);
+            return g_pMath->Ceiling(value);
         }
 
         if (m_Text.compare(m_Pos, 6, L"round(") == 0)
@@ -584,7 +588,7 @@ private:
             m_Pos += 6;
             double value = ParseExpression();
             if (!Match(L')')) throw std::runtime_error("Missing )");
-            return NMath::g_pMath->Round(value);
+            return g_pMath->Round(value);
         }
 
         if (m_Text.compare(m_Pos, 4, L"sin(") == 0)
@@ -592,7 +596,7 @@ private:
             m_Pos += 4;
             double value = ParseExpression();
             if (!Match(L')')) throw std::runtime_error("Missing )");
-            return NMath::g_pMath->Sin(value);
+            return g_pMath->Sin(value);
         }
 
         if (m_Text.compare(m_Pos, 4, L"cos(") == 0)
@@ -600,7 +604,7 @@ private:
             m_Pos += 4;
             double value = ParseExpression();
             if (!Match(L')')) throw std::runtime_error("Missing )");
-            return NMath::g_pMath->Cos(value);
+            return g_pMath->Cos(value);
         }
 
         if (m_Text.compare(m_Pos, 4, L"tan(") == 0)
@@ -608,7 +612,7 @@ private:
             m_Pos += 4;
             double value = ParseExpression();
             if (!Match(L')')) throw std::runtime_error("Missing )");
-            return NMath::g_pMath->Tan(value);
+            return g_pMath->Tan(value);
         }
 
         if (m_Text.compare(m_Pos, 4, L"log(") == 0)
@@ -616,7 +620,7 @@ private:
             m_Pos += 4;
             double value = ParseExpression();
             if (!Match(L')')) throw std::runtime_error("Missing )");
-            return NMath::g_pMath->Log(value);
+            return g_pMath->Log(value);
         }
 
         if (m_Text.compare(m_Pos, 6, L"log10(") == 0)
@@ -624,7 +628,7 @@ private:
             m_Pos += 6;
             double value = ParseExpression();
             if (!Match(L')')) throw std::runtime_error("Missing )");
-            return NMath::g_pMath->Log10(value);
+            return g_pMath->Log10(value);
         }
 
         if (m_Text.compare(m_Pos, 4, L"exp(") == 0)
@@ -632,7 +636,7 @@ private:
             m_Pos += 4;
             double value = ParseExpression();
             if (!Match(L')')) throw std::runtime_error("Missing )");
-            return NMath::g_pMath->Exp(value);
+            return g_pMath->Exp(value);
         }
 
         return ParseNumber();
@@ -659,6 +663,7 @@ private:
 
 void AppendExpression(const wchar_t* text)
 {
+    Beep(750, 80);
     g_Expression += text;
     SetWindowTextW(g_hDisplay, g_Expression.c_str());
     g_NewInput = false;
@@ -854,7 +859,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             case IDC_BTN_RAND:
             {
                 wchar_t buffer[64];
-                swprintf_s(buffer, L"%g", NMath::g_pRandom->RandomDouble(0.0, 1.0));
+                swprintf_s(buffer, L"%g", g_pRandom->RandomDouble(0.0, 1.0));
                 AppendExpression(buffer);
                 break;
             }
@@ -862,36 +867,42 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             case IDC_BTN_RANDINT:
             {
                 wchar_t buffer[64];
-                swprintf_s(buffer, L"%d", NMath::g_pRandom->RandomInt(0, 100));
+                swprintf_s(buffer, L"%d", g_pRandom->RandomInt(0, 100));
                 AppendExpression(buffer);
                 break;
             }
 
             case IDC_BTN_RANDBOOL:
-                AppendExpression(NMath::g_pRandom->RandomBool() ? L"1" : L"0");
+                AppendExpression(g_pRandom->RandomBool() ? L"1" : L"0");
                 break;
 
             case IDC_BTN_EQ:
+                Beep(750, 80);
                 EvaluateExpression(hWnd);
                 break;
 
             case IDC_BTN_CLR:
+                Beep(750, 80);
                 ClearExpression();
                 break;
 
             case ID_FILE_SAVEHISTORY:
+                Beep(750, 80);
                 SaveHistoryToFile(hWnd);
                 break;
 
             case IDM_ABOUT:
+                Beep(750, 80);
                 DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
                 break;
 
             case ID_FILE_OPTIONS:
+                Beep(750, 80);
                 DialogBox(hInst, MAKEINTRESOURCE(IDD_OPTIONS), hWnd, Options);
                 break;
 
             case IDM_EXIT:
+                Beep(750, 80);
                 DestroyWindow(hWnd);
                 break;
 
@@ -936,6 +947,7 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 
         case IDOK:
         case IDCANCEL:
+            Beep(750, 80);
             EndDialog(hDlg, LOWORD(wParam));
             return (INT_PTR)TRUE;
         }
@@ -968,6 +980,8 @@ INT_PTR CALLBACK Options(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
         case IDC_RADIO5:
             g_PrecisionMode = LOWORD(wParam) - IDC_RADIO1 + 1;
 
+            Beep(750, 80);
+
             CheckRadioButton(
                 hDlg,
                 IDC_RADIO1,
@@ -977,10 +991,12 @@ INT_PTR CALLBACK Options(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
             return (INT_PTR)TRUE;
 
         case IDOK:
+            Beep(750, 80);
             EndDialog(hDlg, IDOK);
             return (INT_PTR)TRUE;
 
         case IDCANCEL:
+            Beep(750, 80);
             EndDialog(hDlg, IDCANCEL);
             return (INT_PTR)TRUE;
         }

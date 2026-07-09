@@ -13,11 +13,11 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Shared Files">
+      <UniqueIdentifier>{fe04b816-8054-4416-add9-6b42ec7c8c16}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="framework.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -27,11 +27,14 @@
     <ClInclude Include="calc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="pch.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\shared\pch.h">
+      <Filter>Shared Files</Filter>
     </ClInclude>
-    <ClInclude Include="math\NMath.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\shared\framework.h">
+      <Filter>Shared Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shared\imath.h">
+      <Filter>Shared Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -39,9 +42,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="math\nmath.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
